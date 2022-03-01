@@ -3,29 +3,30 @@
 ---
 ```go
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/lstack-org/utils/pkg/catalog/component"
+    "errors"
+    "fmt"
+    "github.com/gin-gonic/gin"
+    "github.com/ouyang-xlauncher/catalog-utils/component"
 )
 
-func CatalogComponent(ctx *gin.Context) {
-	component.NewComponentHandler(ctx, &C{})
+
+func CatalogComponentChange(ctx *gin.Context) {
+    component.NewComponentHandler(ctx, &C{})
 }
 
-
 type C struct {
-	
 }
 
 func (c *C) Edit(arg component.EditArg) error {
-	fmt.Println(arg)
-	return nil
+    fmt.Println(arg)
+    return nil
 }
 
 func (c *C) Del(arg component.DeleteArg) error {
-	fmt.Println(arg)
-	return nil
+    fmt.Println(arg)
+    return errors.New("123")
 }
+
 ```
 
 
