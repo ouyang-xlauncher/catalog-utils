@@ -29,6 +29,10 @@ type Component struct {
 	StatusDescription string    `json:"statusDescription"`
 }
 
+type AddArg struct {
+	Component Component `json:"component"`
+}
+
 type EditArg struct {
 	OldComponent Component `json:"oldComponent"`
 	NewComponent Component `json:"newComponent"`

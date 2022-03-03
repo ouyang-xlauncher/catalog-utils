@@ -6,6 +6,8 @@ import (
 )
 
 type Interface interface {
+	// Add 添加组件
+	Add(arg AddArg) error
 	// Edit 修改组件
 	Edit(arg EditArg) error
 	// Del 删除组件
@@ -14,12 +16,15 @@ type Interface interface {
 
 type Notify struct {
 	*gin.Context
+	AddHandler
 	EditHandler
 	DeleteHandler
+	AddArg
 	EditArg
 	DeleteArg
 }
 
+type AddHandler func(AddArg) error
 type EditHandler func(EditArg) error
 type DeleteHandler func(DeleteArg) error
 
@@ -35,6 +40,8 @@ func NewComponentHandler(ctx *gin.Context, catalogInterface Interface) {
 		return
 	}
 	switch ctx.Request.Method {
+	case http.MethodPost:
+		err = c.AddHandler(c.AddArg)
 	case http.MethodPut:
 		err = c.EditHandler(c.EditArg)
 	case http.MethodDelete:
