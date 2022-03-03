@@ -51,6 +51,7 @@ func NewComponentHandler(ctx *gin.Context, catalogInterface Interface) {
 		c.JSON(400, Fail(err))
 		return
 	}
+
 	c.JSON(200, Success())
 	return
 }
