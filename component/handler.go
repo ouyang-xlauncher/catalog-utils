@@ -7,11 +7,11 @@ import (
 
 type Interface interface {
 	// Add 添加组件
-	Add(arg AddArg) error
+	Add(ctx *gin.Context, arg AddArg) error
 	// Edit 修改组件
-	Edit(arg EditArg) error
+	Edit(ctx *gin.Context, arg EditArg) error
 	// Del 删除组件
-	Del(arg DeleteArg) error
+	Del(ctx *gin.Context, arg DeleteArg) error
 }
 
 type Notify struct {
@@ -24,9 +24,9 @@ type Notify struct {
 	DeleteArg
 }
 
-type AddHandler func(AddArg) error
-type EditHandler func(EditArg) error
-type DeleteHandler func(DeleteArg) error
+type AddHandler func(*gin.Context, AddArg) error
+type EditHandler func(*gin.Context, EditArg) error
+type DeleteHandler func(*gin.Context, DeleteArg) error
 
 func NewComponentHandler(ctx *gin.Context, catalogInterface Interface) {
 	c := &Notify{
@@ -47,11 +47,11 @@ func NewComponentHandler(ctx *gin.Context, catalogInterface Interface) {
 	}
 	switch ctx.Request.Method {
 	case http.MethodPost:
-		err = c.AddHandler(c.AddArg)
+		err = c.AddHandler(ctx, c.AddArg)
 	case http.MethodPut:
-		err = c.EditHandler(c.EditArg)
+		err = c.EditHandler(ctx, c.EditArg)
 	case http.MethodDelete:
-		err = c.DeleteHandler(c.DeleteArg)
+		err = c.DeleteHandler(ctx, c.DeleteArg)
 	}
 	if err != nil {
 		c.JSON(400, Fail(err))
