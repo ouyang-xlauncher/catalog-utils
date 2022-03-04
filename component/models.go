@@ -30,7 +30,7 @@ type Component struct {
 }
 
 type AddArg struct {
-	Component Component `json:"component"`
+	Component
 }
 
 type EditArg struct {

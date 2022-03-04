@@ -28,14 +28,14 @@ type AddHandler func(AddArg) error
 type EditHandler func(EditArg) error
 type DeleteHandler func(DeleteArg) error
 
-func NewComponentHandler(ctx *gin.Context, catalogInterface Interface, binders ...Binder) {
+func NewComponentHandler(ctx *gin.Context, catalogInterface Interface) {
 	c := &Notify{
 		Context:       ctx,
 		AddHandler:    catalogInterface.Add,
 		EditHandler:   catalogInterface.Edit,
 		DeleteHandler: catalogInterface.Del,
 	}
-	err := Bind(ctx, c, binders...)
+	err := ctx.ShouldBindHeader(catalogInterface)
 	if err != nil {
 		c.JSON(400, Fail(err))
 		return
