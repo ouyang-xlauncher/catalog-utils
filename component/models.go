@@ -18,6 +18,7 @@ type Component struct {
 	Description       string    `json:"description"`
 	CreateTime        time.Time `json:"createTime"`
 	AgentName         string    `json:"agentName"`
+	AgentId           string    `json:"agentId"`
 	ProviderName      string    `json:"providerName"`
 	GroupId           int64     `json:"groupId"`
 	GroupName         string    `json:"groupName"`
